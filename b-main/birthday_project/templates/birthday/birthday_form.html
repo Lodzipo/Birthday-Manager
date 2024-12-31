@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  {% if "/edit/" in request.path %}
+    <!-- Заголовок для страницы редактирования -->
+    <h1>Редактировать запись {{ form.instance.pk }}</h1> 
+  {% else %}
+    <!-- Заголовок для страницы создания новой записи -->
+    <h1>Создать запись</h1>
+  {% endif %}
+  
+  <!-- Карточка формы для ввода данных -->
+  <div class="card col-4">
+    <div class="card-header">
+      Калькулятор ожидания дня рождения
+    </div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %} <!-- Токен защиты от CSRF-атак -->
+        {% bootstrap_form form %} <!-- Отображение формы с использованием Bootstrap -->
+        {% bootstrap_button button_type="submit" content="Отправить" %} <!-- Кнопка отправки формы -->
+      </form>
+    </div>
+  </div>
+{% endblock content %}

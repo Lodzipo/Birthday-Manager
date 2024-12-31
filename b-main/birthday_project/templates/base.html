@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Проект ACME</title>
+    <!-- Подключение библиотеки django_bootstrap5 для работы с Bootstrap-тегами -->
+    {% load django_bootstrap5 %}
+    <!-- Подключение CSS-стилей Bootstrap -->
+    {% bootstrap_css %}
+  </head>
+  <body>
+    <!-- Включение шапки сайта из отдельного шаблона -->
+    {% include "includes/header.html" %}
+    <div class="container pt-5">
+      <!-- Секция для отображения основного содержимого страницы -->
+      {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

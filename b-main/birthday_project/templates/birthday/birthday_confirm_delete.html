@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <h1>Удалить запись {{ object.pk }}</h1>
+  
+  <!-- Карточка с информацией о записи, которую нужно удалить -->
+  <div class="card col-4 m-3">
+    <div class="card-header">
+      <!-- Отображение имени, фамилии и даты рождения -->
+      {{ birthday.first_name }} {{ birthday.last_name }} - {{ birthday.birthday }}
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %} <!-- Токен защиты от CSRF-атак -->
+        {% bootstrap_button button_type="submit" content="Удалить" %} <!-- Кнопка удаления -->
+      </form>
+    </div>
+  </div>
+{% endblock content %}

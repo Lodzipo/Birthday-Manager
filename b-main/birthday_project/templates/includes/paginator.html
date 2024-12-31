@@ -1,0 +1,48 @@
+{% if page_obj.has_other_pages %}
+  <nav class="my-5">
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <!-- Кнопка для перехода на первую страницу -->
+        <li class="page-item">
+          <a class="page-link" href="?page=1">Первая</a>
+        </li>
+        <!-- Кнопка для перехода на предыдущую страницу -->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+            Предыдущая
+          </a>
+        </li>
+      {% endif %}
+      
+      <!-- Отображение всех номеров страниц -->
+      {% for i in page_obj.paginator.page_range %}
+        {% if page_obj.number == i %}
+          <!-- Текущая страница: отображается как активная кнопка -->
+          <li class="page-item active">
+            <span class="page-link">{{ i }}</span>
+          </li>
+        {% else %}
+          <!-- Другие страницы: отображаются как ссылки -->
+          <li class="page-item">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+      
+      {% if page_obj.has_next %}
+        <!-- Кнопка для перехода на следующую страницу -->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+            Следующая
+          </a>
+        </li>
+        <!-- Кнопка для перехода на последнюю страницу -->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+            Последняя
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endif %}

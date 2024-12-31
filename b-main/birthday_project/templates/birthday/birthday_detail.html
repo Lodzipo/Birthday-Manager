@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  <!-- Добавление ID записи -->
+  ID записи: {{ object.id }}
+  <hr>
+  {% if birthday.image %}
+    <div>
+      <!-- Отображение изображения, если оно есть -->
+      <img src="{{ birthday.image.url }}" height="200">
+    </div>
+  {% endif %} 
+  {% if birthday_countdown == 0 %}
+    <!-- Сообщение о дне рождения -->
+    <h2>
+    Сегодня день рождения у {{ object.first_name }} {{ object.last_name }}!
+    </h2>
+  {% else %}
+    <!-- Сообщение с обратным отсчётом до дня рождения -->
+    <h2>Осталось дней до дня рождения {{ object.first_name }} {{ object.last_name }}: {{ birthday_countdown }}!</h2>
+  {% endif %}
+  <div>
+    <h3>Поздравления:</h3>
+    {% if user.is_authenticated %}
+      <!-- Форма для добавления поздравления доступна только авторизованным пользователям -->
+      <form action="{% url 'birthday:add_comment' object.pk %}" method="post" class="col-3">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_type="submit" content="Отправить поздравление" %}
+      </form>
+    {% endif %}
+    {% for congratulation in congratulations %}
+      <hr>
+      <!-- Информация о пользователе и времени поздравления -->
+      <p>
+        {{ congratulation.author.username }}
+        поздравил {{ congratulation.created_at|date:"d M Y H:i" }}
+      </p>
+      <!-- Текст поздравления -->
+      <p><b>{{ congratulation.text }}</b></p>
+    {% endfor %}
+  </div>
+{% endblock content %}
